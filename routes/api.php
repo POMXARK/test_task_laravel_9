@@ -12,3 +12,4 @@ use App\Http\Controllers\PassportAuthController;
 |
 */
 Route::post('register', [PassportAuthController::class, 'register']);
+Route::post('login', [PassportAuthController::class, 'login']);

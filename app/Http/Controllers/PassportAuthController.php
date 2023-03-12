@@ -31,4 +31,20 @@ class PassportAuthController extends Controller
 
         return response()->json(['token' => $token], 200);
     }
+
+    /**
+     * Login
+     * Авторизация: email или телефон (одно поле), пароль
+     */
+    public function login(Request $request)
+    {
+        if (auth()->attempt(['email' => $request->email,'password' => $request->password]) ||
+            auth()->attempt(['phone' => $request->email,'password' => $request->password])
+        ) {
+            $token = auth()->user()->createToken('LaravelAuthApp')->accessToken;
+            return response()->json(['token' => $token], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+        }
+    }
 }
