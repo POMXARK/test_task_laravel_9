@@ -1,0 +1,157 @@
+openapi: 3.0.0
+info:
+  title: Test API
+  description: Тестовое задание
+  version: 0.0.1
+
+servers:
+  - url: http://localhost:8000/api
+    description: local server
+#  - url: http://producation.app/chat
+#    description: production server
+
+components:
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+  schemas:
+    Register:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Roman
+          description: Имя
+        email:
+          type: string
+          example: 1997pom@gmail.com
+        password:
+          type: string
+          example: s3#Xb5s6$%&!:.
+          description: Пароль
+        password_confirmation:
+          type: string
+          example: s3#Xb5s6$%&!:.
+          description: Подтветрждение пароля
+        phone:
+          type: string
+          example: +7 9141888576
+          description: Телефон
+
+    Login:
+      type: object
+      properties:
+        login:
+          type: string
+          example: 1997pom@gmail.com
+        password:
+          type: string
+          example: s3#Xb5s6$%&!:.
+          description: Пароль
+
+    Product:
+      type: object
+      properties:
+        name:
+          type: string
+          example: PC
+          description: Наименование товара
+        price:
+          type: string
+          example: 100000
+          description: Стоимость
+        amount:
+          type: string
+          example: 1
+          description: Количество
+        properties:
+          type: object
+          example: {"color": "white", "weight" : "10"}
+          description: Свойства
+
+paths:
+  /register:
+    post:
+      summary: Регистрация
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+      responses:
+        '201':
+          description: JSON array
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: string
+
+  /login:
+    post:
+      summary: Авторизация
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        '200':
+          description: JSON array
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: string
+
+  /products/create:
+    post:
+      security:
+        - bearerAuth: [ ]
+      summary: Запись
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: JSON array
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: string
+
+  /products:
+    get:
+      security:
+        - bearerAuth: [ ]
+      summary: Все Товары
+      parameters:
+        - name: "properties[color][]"
+          in: query
+          example: white
+          description: Цвет
+          schema:
+            type: string
+        - name: "properties[weight][]"
+          in: query
+          example: 10
+          description: Вес
+          schema:
+            type: string
+      responses:
+        '200':
+          description: JSON array
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: string

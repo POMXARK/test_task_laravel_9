@@ -13,6 +13,13 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'price',
+        'amount',
+        'properties'
+    ];
+
     // чтобы этот столбец автоматически приводился из JSON в массив
     protected $casts = [
         'properties' => 'array'

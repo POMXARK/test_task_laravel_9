@@ -23,7 +23,7 @@ class PassportAuthController extends Controller
 
         $token = $user->createToken('LaravelAuthApp')->accessToken;
 
-        return response()->json(['token' => $token], 200);
+        return response()->json(['token' => $token], 201);
     }
 
     /**
@@ -32,8 +32,8 @@ class PassportAuthController extends Controller
      */
     public function login(Request $request): JsonResponse
     {
-        if (auth()->attempt(['email' => $request->email,'password' => $request->password]) ||
-            auth()->attempt(['phone' => $request->email,'password' => $request->password])
+        if (auth()->attempt(['email' => $request->login,'password' => $request->password]) ||
+            auth()->attempt(['phone' => $request->login,'password' => $request->password])
         ) {
             $token = auth()->user()->createToken('LaravelAuthApp')->accessToken;
             return response()->json(['token' => $token], 200);

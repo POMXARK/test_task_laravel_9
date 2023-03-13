@@ -15,4 +15,13 @@ use App\Http\Controllers\PassportAuthController;
 */
 Route::post('register', [PassportAuthController::class, 'register']);
 Route::post('login', [PassportAuthController::class, 'login']);
-Route::get('products', [ProductController::class, 'products'])->middleware('auth:api');
+
+Route::prefix('products')->group(function () {
+    Route::middleware(['auth:api'])->group(function () {
+        Route::get('', [ProductController::class, 'products']);
+        Route::post('create', [ProductController::class, 'create']);
+    });
+
+});
+
+
