@@ -6,7 +6,9 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "dragon-code/support": "^6.11",
         "guzzlehttp/guzzle": "^7.2",
+        "laravel-lang/publisher": "^14.7",
         "laravel/framework": "v9.52.15",
         "laravel/passport": "^11.8",
         "laravel/sanctum": "^3.0",
